@@ -4,7 +4,9 @@ interface Pokemon {
     name: string
     stats: []
     types: []
-    image: string  
+    sprites: {
+        front_default:string
+    }  
 }
 
 export type PokemonProps = {
@@ -27,15 +29,16 @@ function PokemonCard (props:PokemonProps){
     }
     const [pokemon, setPokemon] = useState<Pokemon>();
     return (
-        <div className='pokemon-container'>
+        <div className='pokemon-container'>            
             <div className="data">
             <h2>Pokemon {pokemon?.name}</h2>
-                {pokemon?.types?.map((t:any) => {
-                    return (
-                        <p key={t.type.name} className={`type-icon type-${t.type.name}`}>{t.type.name}</p>
-                    )
-                    })
-                }
+            <img src={pokemon?.sprites.front_default} alt={pokemon?.name} />
+            {pokemon?.types?.map((t:any) => {
+                return (
+                    <p key={t.type.name} className={`type-icon type-${t.type.name}`}>{t.type.name}</p>
+                )
+                })
+            }
             </div>
             <div className="stats">
                 <h3>
