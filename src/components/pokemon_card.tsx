@@ -11,10 +11,10 @@ type PokemonProps = {
 function PokemonCard(props: PokemonProps) {
     const pokemon = props.pokemon
     const [description, setDescription ] = useState('');
+    const msg = new SpeechSynthesisUtterance();
 
     useEffect(()=>{
         if(description){
-            var msg = new SpeechSynthesisUtterance();
             msg.text = description;
             window.speechSynthesis.speak(msg);  
         }
