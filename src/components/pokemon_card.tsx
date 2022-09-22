@@ -12,10 +12,14 @@ function PokemonCard(props: PokemonProps) {
     const pokemon = props.pokemon
     const [description, setDescription ] = useState('');
     const msg = new SpeechSynthesisUtterance();
+    const language = window.navigator.language.split('-')[0];
 
     useEffect(()=>{
+        console.log(language);
         if(description){
+            window.speechSynthesis.cancel();
             msg.text = description;
+            msg.lang = language;
             window.speechSynthesis.speak(msg);  
         }
     }, [description])
@@ -29,7 +33,7 @@ function PokemonCard(props: PokemonProps) {
                     fetch(pokemon?.species.url)
                     .then(response => response.json())
                     .then((specie:any)=>{
-                        let flavor_text = specie?.flavor_text_entries?.filter((s:any) => s.language.name == 'es')
+                        let flavor_text = specie?.flavor_text_entries?.filter((s:any) => s.language.name == language)
                         setDescription(flavor_text[Math.floor(Math.random()*flavor_text.length)].flavor_text)
                     }).catch(err => console.log(err));
                 }}/>
