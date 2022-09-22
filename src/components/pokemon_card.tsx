@@ -39,6 +39,10 @@ function PokemonCard(props: PokemonProps) {
                     )
                 })
                 }
+
+                <div className='description'>
+                    <p>{description}</p>
+                </div>
             </div>
             <div className="stats">
                 <h3>
