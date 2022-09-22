@@ -2,31 +2,33 @@ import React, { FormEvent, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PokemonCard from './components/pokemon_card'
+import getPokemonByName from './services/pokemon';
+import { Pokemon } from './types';
+
 
 
 function App() {
-  const [search, setSearch] = useState('');
-  const [searchName, setSearchName] = useState('');
+  const [pokemon, setPokemon] = useState<Pokemon>();
 
 
-  const handleSubmit = (e: FormEvent ) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault()
-    setSearchName(search)
+    let search = e.target.search.value
+    if(search && search != '')
+      setPokemon(await getPokemonByName(search))
+    else setPokemon(undefined)
   };
 
   return (
     <div className="App">
-      Pokemon finder
-      <div>
+      <h1>Pokemon finder</h1>
+      <div className='search'>
         <form action="#" onSubmit={handleSubmit} >
-          <input type="text" name="search" placeholder='Search...' onChange={(e) => {
-            if(e.target.value.length > 0)
-              setSearch(e.target.value)
-          }}/>
+          <input type="text" name="search" placeholder='Search...' autoComplete='off'/>
           <button>Search</button>
         </form>
       </div>
-      <PokemonCard name={searchName}/>
+      <PokemonCard pokemon={pokemon}/>
     </div>
   );
 }
